@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: internfinder
+    env: node
+    plan: starter
+    buildCommand: npm run build
+    startCommand: npm start
+    autoDeploy: true
+    disk:
+      name: uploads
+      mountPath: /opt/render/project/src/uploads
+      sizeGB: 2
