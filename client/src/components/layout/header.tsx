@@ -38,10 +38,12 @@ export default function Header() {
           </nav>
           
           <div className="flex items-center space-x-4">
-            <Button data-testid="button-profile">
-              <i className="fas fa-user mr-2"></i>
-              Profile
-            </Button>
+            <Link href="/profile">
+              <Button data-testid="button-profile">
+                <i className="fas fa-user mr-2"></i>
+                Profile
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

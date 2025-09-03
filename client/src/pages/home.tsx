@@ -8,6 +8,11 @@ import ApplicationStats from "@/components/applications/application-stats";
 export default function Home() {
   const [uploadedResume, setUploadedResume] = useState(null);
 
+  const scrollToUpload = () => {
+    const uploadSection = document.getElementById('resume-upload-section');
+    uploadSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div className="bg-background">
       {/* Hero Section */}
@@ -21,7 +26,7 @@ export default function Home() {
               Upload your resume, discover opportunities that match your skills, and get AI-powered suggestions to optimize your applications. Stop applying blindly and start landing interviews.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="px-8" data-testid="button-upload-start">
+              <Button size="lg" className="px-8" onClick={scrollToUpload} data-testid="button-upload-start">
                 <i className="fas fa-upload mr-2"></i>
                 Upload Resume & Start Matching
               </Button>
@@ -61,7 +66,7 @@ export default function Home() {
       </section>
 
       {/* Resume Upload Section */}
-      <section className="py-16" data-testid="section-resume-upload">
+      <section id="resume-upload-section" className="py-16" data-testid="section-resume-upload">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
