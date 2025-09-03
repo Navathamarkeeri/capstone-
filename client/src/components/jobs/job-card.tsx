@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
@@ -157,12 +158,14 @@ export default function JobCard({ internship }: JobCardProps) {
               Posted {formatDate(internship.postedAt || new Date())}
             </span>
             <div className="flex space-x-3">
-              <Button 
-                variant="outline"
-                data-testid={`button-view-details-${internship.id}`}
-              >
-                View Details
-              </Button>
+              <Link href={`/internship/${internship.id}`}>
+                <Button 
+                  variant="outline"
+                  data-testid={`button-view-details-${internship.id}`}
+                >
+                  View Details
+                </Button>
+              </Link>
               <Button
                 onClick={() => applyMutation.mutate()}
                 disabled={applyMutation.isPending}
