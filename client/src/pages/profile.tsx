@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 export default function Profile() {
+  const [, setLocation] = useLocation();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     firstName: "John",
@@ -39,6 +41,24 @@ export default function Profile() {
 
   const handleInputChange = (field: string, value: string) => {
     setProfileData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleViewResume = (resumeId: string) => {
+    // In a real app, this would open the resume in a viewer
+    alert(`Opening resume ${resumeId}`);
+  };
+
+  const handleDownloadResume = (resumeId: string, fileName: string) => {
+    // In a real app, this would download the resume file
+    alert(`Downloading ${fileName}`);
+  };
+
+  const scrollToUploadSection = () => {
+    setLocation('/');
+    setTimeout(() => {
+      const uploadSection = document.getElementById('resume-upload-section');
+      uploadSection?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
   };
 
   return (
@@ -202,11 +222,21 @@ export default function Profile() {
                             </div>
                           </div>
                           <div className="flex space-x-2">
-                            <Button variant="outline" size="sm" data-testid={`button-view-resume-${resume.id}`}>
+                            <Button 
+                              variant="outline" 
+                              size="sm" 
+                              onClick={() => handleViewResume(resume.id)}
+                              data-testid={`button-view-resume-${resume.id}`}
+                            >
                               <i className="fas fa-eye mr-1"></i>
                               View
                             </Button>
-                            <Button variant="outline" size="sm" data-testid={`button-download-resume-${resume.id}`}>
+                            <Button 
+                              variant="outline" 
+                              size="sm"
+                              onClick={() => handleDownloadResume(resume.id, resume.fileName)}
+                              data-testid={`button-download-resume-${resume.id}`}
+                            >
                               <i className="fas fa-download mr-1"></i>
                               Download
                             </Button>
@@ -280,18 +310,27 @@ export default function Profile() {
                   <CardTitle className="text-lg">Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <Button variant="outline" className="w-full justify-start" data-testid="button-upload-new-resume">
+                  <Button 
+                    variant="outline" 
+                    className="w-full justify-start" 
+                    onClick={scrollToUploadSection}
+                    data-testid="button-upload-new-resume"
+                  >
                     <i className="fas fa-upload mr-2"></i>
                     Upload New Resume
                   </Button>
-                  <Button variant="outline" className="w-full justify-start" data-testid="button-view-applications">
-                    <i className="fas fa-list mr-2"></i>
-                    View Applications
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start" data-testid="button-browse-jobs">
-                    <i className="fas fa-search mr-2"></i>
-                    Browse Jobs
-                  </Button>
+                  <Link href="/applications">
+                    <Button variant="outline" className="w-full justify-start" data-testid="button-view-applications">
+                      <i className="fas fa-list mr-2"></i>
+                      View Applications
+                    </Button>
+                  </Link>
+                  <Link href="/jobs">
+                    <Button variant="outline" className="w-full justify-start" data-testid="button-browse-jobs">
+                      <i className="fas fa-search mr-2"></i>
+                      Browse Jobs
+                    </Button>
+                  </Link>
                 </CardContent>
               </Card>
             </div>
